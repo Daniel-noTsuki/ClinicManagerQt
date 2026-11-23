@@ -73,6 +73,11 @@ MainWindow::MainWindow(DatabaseManager *database, const QString &fullName, QWidg
     refreshModel();
 }
 
+void MainWindow::setSearchKeyword(const QString &keyword) {
+    m_search->setText(keyword);
+    applyFilter();
+}
+
 QWidget *MainWindow::buildPatientsPage() {
     auto *page = new QWidget(this);
     auto *layout = new QVBoxLayout(page);
@@ -250,4 +255,3 @@ void MainWindow::deletePatient() {
     }
     refreshModel(QStringLiteral("患者记录已删除"));
 }
-

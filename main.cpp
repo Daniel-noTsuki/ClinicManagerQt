@@ -122,12 +122,19 @@ static int captureScreens(DatabaseManager &database, const QString &outputDirect
     login.show();
     QApplication::processEvents();
     if (!login.grab().save(outputDirectory + QStringLiteral("/01-login.png"))) return 21;
+    login.setCredentials(QStringLiteral("admin"), QStringLiteral("wrong-password"));
+    QMetaObject::invokeMethod(&login, "attemptLogin");
+    QApplication::processEvents();
+    if (!login.grab().save(outputDirectory + QStringLiteral("/02-login-rejected.png"))) return 22;
     login.hide();
 
     MainWindow main(&database, QStringLiteral("李志鑫"));
     main.show();
     QApplication::processEvents();
-    if (!main.grab().save(outputDirectory + QStringLiteral("/02-patient-management.png"))) return 22;
+    if (!main.grab().save(outputDirectory + QStringLiteral("/03-patient-management.png"))) return 23;
+    main.setSearchKeyword(QStringLiteral("不存在的患者名"));
+    QApplication::processEvents();
+    if (!main.grab().save(outputDirectory + QStringLiteral("/04-empty-query.png"))) return 24;
     main.hide();
 
     PatientDialog dialog;
@@ -142,7 +149,7 @@ static int captureScreens(DatabaseManager &database, const QString &outputDirect
     dialog.setRecord(sample);
     dialog.show();
     QApplication::processEvents();
-    if (!dialog.grab().save(outputDirectory + QStringLiteral("/03-patient-editor.png"))) return 23;
+    if (!dialog.grab().save(outputDirectory + QStringLiteral("/05-patient-editor.png"))) return 25;
     return 0;
 }
 

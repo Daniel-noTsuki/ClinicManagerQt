@@ -14,6 +14,7 @@ class MainWindow : public QMainWindow {
 public:
     explicit MainWindow(DatabaseManager *database, const QString &fullName,
                         QWidget *parent = nullptr);
+    void setSearchKeyword(const QString &keyword);
 
 private slots:
     void applyFilter();
@@ -34,4 +35,3 @@ private:
     QLineEdit *m_search = nullptr;
     QLabel *m_status = nullptr;
 };
-
